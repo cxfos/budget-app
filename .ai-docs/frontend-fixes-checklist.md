@@ -4,11 +4,14 @@
 - [x] **Fix 405 Method Not Allowed errors** - The dashboard is showing 405 errors for expense API calls
   - There's a specific issue with the `/expenses/by-category` endpoint which doesn't exist in the backend
   - Implemented a client-side solution that aggregates expenses by category using the existing `/expenses` endpoint
-- [ ] **Fix API base URL configuration** - Frontend service is making requests to the wrong base URL
+- [x] **Fix API base URL configuration** - Frontend service is making requests to the wrong base URL
   - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost'
 
 ## UI Functionality Issues
 - [ ] **Total Expenses display** - Currently showing $0.00, need to fetch and display actual data
+  - Fixed the parameter names in the API calls, converting camelCase to snake_case for backend compatibility
+  - Fixed date formatting to use ISO 8601 format with time component for backend compatibility
+  - Ensured amount values are converted to numbers before sending to the backend
 - [ ] **Search functionality** - Implement working search for expenses
 - [ ] **Category filtering** - Enable category filtering for expenses
 - [ ] **Date range filtering** - Make date range filters functional
@@ -25,7 +28,7 @@ For each issue, follow these steps exactly:
 6. **Next Item**: Move to the next item on the checklist
 
 ## Current Status
-- **Fix API base URL configuration**: 
+- **Total Expenses display**: 
   - ✅ Analysis completed
   - ✅ Implementation completed
   - ✅ Build completed
@@ -33,4 +36,5 @@ For each issue, follow these steps exactly:
   - ⏳ Commit pending
 
 ## Completed Fixes
-- [x] **Client-side category aggregation** - Replaced the missing backend endpoint `/expenses/by-category` with a client-side implementation that aggregates expense data by category. This solution fetches all expenses and then calculates category totals locally. Committed in 9c10efc. 
+- [x] **Client-side category aggregation** - Replaced the missing backend endpoint `/expenses/by-category` with a client-side implementation that aggregates expense data by category. This solution fetches all expenses and then calculates category totals locally. Committed in 9c10efc.
+- [x] **API URL configuration** - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost' for the API URL. Committed in 9ebea62. 
