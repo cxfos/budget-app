@@ -128,7 +128,7 @@ The API will be available at `http://localhost:3000`.
 - [x] Test full setup locally
 
 ### Final Polish
-- [ ] Test authentication flow
+- [x] Test authentication flow
 - [ ] Review commit history
 - [ ] Push project to GitHub
 - [ ] Deploy to Render/Fly.io

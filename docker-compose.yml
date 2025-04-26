@@ -18,6 +18,21 @@ services:
     networks:
       - budget-network
 
+  migrate:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.migrate
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=budget_app
+    depends_on:
+      - db
+    networks:
+      - budget-network
+
   db:
     image: postgres:15-alpine
     ports:

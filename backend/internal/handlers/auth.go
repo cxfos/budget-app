@@ -6,6 +6,7 @@ import (
 
 	"github.com/cxfos/budget-app/internal/models"
 	"github.com/cxfos/budget-app/pkg/db"
+	"github.com/cxfos/budget-app/pkg/validator"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -26,6 +27,14 @@ func Register(c *fiber.Ctx) error {
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Invalid request body",
+		})
+	}
+
+	// Validate request
+	if err := validator.Validate.Struct(req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Validation failed",
+			"errors":  err.Error(),
 		})
 	}
 
@@ -82,6 +91,14 @@ func Login(c *fiber.Ctx) error {
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Invalid request body",
+		})
+	}
+
+	// Validate request
+	if err := validator.Validate.Struct(req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Validation failed",
+			"errors":  err.Error(),
 		})
 	}
 

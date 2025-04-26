@@ -34,6 +34,7 @@ func main() {
 	app.Use(cors.New())
 
 	// Public routes
+	app.Get("/api/health", handlers.HealthCheck)
 	app.Post("/api/register", handlers.Register)
 	app.Post("/api/login", handlers.Login)
 
