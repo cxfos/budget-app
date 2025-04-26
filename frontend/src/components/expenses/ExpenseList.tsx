@@ -55,15 +55,19 @@ export function ExpenseList({
         filters={filters} 
         onFilterChange={onFilterChange} 
       />
-      <ExpenseResults 
-        expenses={expenses}
-        pagination={pagination}
-        onUpdate={onUpdate}
-        onDelete={onDelete}
-        onPageChange={handlePageChange}
-        isUpdating={isUpdating}
-        isDeleting={isDeleting}
-      />
+      <div className="flex justify-center">
+        <div className="w-full max-w-4xl">
+          <ExpenseResults 
+            expenses={expenses}
+            pagination={pagination}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+            onPageChange={handlePageChange}
+            isUpdating={isUpdating}
+            isDeleting={isDeleting}
+          />
+        </div>
+      </div>
     </div>
   );
 } 
