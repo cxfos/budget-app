@@ -75,6 +75,8 @@ func GetExpenses(c *fiber.Ctx) error {
 	// Get query parameters
 	startDate := c.Query("start_date")
 	endDate := c.Query("end_date")
+	category := c.Query("category")
+	search := c.Query("search")
 	page := c.QueryInt("page", 1)
 	limit := c.QueryInt("limit", 10)
 
@@ -117,6 +119,23 @@ func GetExpenses(c *fiber.Ctx) error {
 		query += fmt.Sprintf(" AND date <= $%d", argCount)
 		countQuery += fmt.Sprintf(" AND date <= $%d", argCount)
 		args = append(args, endDate)
+		argCount++
+	}
+
+	// Add search functionality
+	if search != "" {
+		query += fmt.Sprintf(" AND (description ILIKE $%d OR category ILIKE $%d)", argCount, argCount)
+		countQuery += fmt.Sprintf(" AND (description ILIKE $%d OR category ILIKE $%d)", argCount, argCount)
+		searchParam := "%" + search + "%"
+		args = append(args, searchParam)
+		argCount++
+	}
+
+	// Add category filter
+	if category != "" {
+		query += fmt.Sprintf(" AND category = $%d", argCount)
+		countQuery += fmt.Sprintf(" AND category = $%d", argCount)
+		args = append(args, category)
 		argCount++
 	}
 
@@ -191,9 +210,11 @@ func GetExpenseTotal(c *fiber.Ctx) error {
 	// Get query parameters
 	startDate := c.Query("start_date")
 	endDate := c.Query("end_date")
+	category := c.Query("category")
+	search := c.Query("search")
 
 	// Build query
-	query := `SELECT COALESCE(SUM(amount), 0) FROM expenses WHERE user_id = $1`
+	query := `SELECT COALESCE(SUM(amount), 0) FROM expenses WHERE user_id = $1 AND deleted_at IS NULL`
 	args := []interface{}{userID}
 	argCount := 2
 
@@ -206,6 +227,21 @@ func GetExpenseTotal(c *fiber.Ctx) error {
 	if endDate != "" {
 		query += ` AND date <= $` + fmt.Sprint(argCount)
 		args = append(args, endDate)
+		argCount++
+	}
+
+	// Add search functionality
+	if search != "" {
+		query += fmt.Sprintf(" AND (description ILIKE $%d OR category ILIKE $%d)", argCount, argCount)
+		searchParam := "%" + search + "%"
+		args = append(args, searchParam)
+		argCount++
+	}
+
+	// Add category filter
+	if category != "" {
+		query += fmt.Sprintf(" AND category = $%d", argCount)
+		args = append(args, category)
 		argCount++
 	}
 

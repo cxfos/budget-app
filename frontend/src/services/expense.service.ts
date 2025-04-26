@@ -76,6 +76,7 @@ export const expenseService = {
   },
 
   async getCategorySummary(filters?: ExpenseFilters): Promise<{ category: string; total: number }[]> {
+    // Since we don't have a dedicated endpoint, we're handling this on the client side
     const convertedFilters = convertFiltersToSnakeCase(filters);
     const { data } = await api.get('/expenses', { params: { ...convertedFilters, limit: 100 } });
     

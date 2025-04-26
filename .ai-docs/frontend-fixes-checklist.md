@@ -8,11 +8,15 @@
   - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost'
 
 ## UI Functionality Issues
-- [ ] **Total Expenses display** - Currently showing $0.00, need to fetch and display actual data
+- [x] **Total Expenses display** - Currently showing $0.00, need to fetch and display actual data
   - Fixed the parameter names in the API calls, converting camelCase to snake_case for backend compatibility
   - Fixed date formatting to use ISO 8601 format with time component for backend compatibility
   - Ensured amount values are converted to numbers before sending to the backend
 - [ ] **Search functionality** - Implement working search for expenses
+  - Added search parameter support to the backend API
+  - Improved component structure to prevent losing focus during search
+  - Created separate components for search controls and results display
+  - Used React.memo to prevent unnecessary re-renders
 - [ ] **Category filtering** - Enable category filtering for expenses
 - [ ] **Date range filtering** - Make date range filters functional
 
@@ -28,7 +32,7 @@ For each issue, follow these steps exactly:
 6. **Next Item**: Move to the next item on the checklist
 
 ## Current Status
-- **Total Expenses display**: 
+- **Search functionality**: 
   - ✅ Analysis completed
   - ✅ Implementation completed
   - ✅ Build completed
@@ -37,4 +41,5 @@ For each issue, follow these steps exactly:
 
 ## Completed Fixes
 - [x] **Client-side category aggregation** - Replaced the missing backend endpoint `/expenses/by-category` with a client-side implementation that aggregates expense data by category. This solution fetches all expenses and then calculates category totals locally. Committed in 9c10efc.
-- [x] **API URL configuration** - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost' for the API URL. Committed in 9ebea62. 
+- [x] **API URL configuration** - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost' for the API URL. Committed in 9ebea62.
+- [x] **Expense creation and total display** - Fixed expense creation by properly formatting dates to ISO 8601 format and ensuring amounts are sent as numbers. This also fixed the total expenses display. Committed in 2bb5fbe. 
