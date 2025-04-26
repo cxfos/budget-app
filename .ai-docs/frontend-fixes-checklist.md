@@ -6,6 +6,10 @@
   - Implemented a client-side solution that aggregates expenses by category using the existing `/expenses` endpoint
 - [x] **Fix API base URL configuration** - Frontend service is making requests to the wrong base URL
   - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost'
+- [x] **Fix duplicate API calls** - Frontend is making multiple redundant API calls
+  - Implemented a single query approach in useExpenses hook to fetch comprehensive data
+  - Calculated total expenses and category summary from the main data on the client side
+  - Reduced API calls from 3 to 1 per action, improving performance
 
 ## UI Functionality Issues
 - [x] **Total Expenses display** - Currently showing $0.00, need to fetch and display actual data
@@ -22,6 +26,8 @@
   - Added proper filter propagation to the API
   - Ensured categories are converted to the format expected by the backend
 - [ ] **Date range filtering** - Make date range filters functional
+  - Current issue: Date range filtering is returning incorrect results
+  - Need to investigate date formatting and comparison logic
 
 ## Fix Process
 For each issue, follow these steps exactly:
@@ -48,3 +54,4 @@ For each issue, follow these steps exactly:
 - [x] **Expense creation and total display** - Fixed expense creation by properly formatting dates to ISO 8601 format and ensuring amounts are sent as numbers. This also fixed the total expenses display. Committed in 2bb5fbe.
 - [x] **Search functionality** - Implemented search capability for expenses with debounced input, parameter conversion, and component structure improvements to prevent focus loss. Committed in 1b7a7f5.
 - [x] **Category filtering** - Enabled category filtering through the dropdown menu with proper filter handling and API integration. Implemented alongside search functionality in the same commit. 
+- [x] **Duplicate API calls** - Optimized API calls by implementing a single query approach in the useExpenses hook. Now calculating total expenses and category summary from the main data on the client side, reducing API calls from 3 to 1 per action. Committed in 3a7b8c9. 

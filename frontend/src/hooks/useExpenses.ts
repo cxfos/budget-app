@@ -5,27 +5,39 @@ import { CreateExpenseDTO, UpdateExpenseDTO, ExpenseFilters } from '../types/exp
 export function useExpenses(filters?: ExpenseFilters) {
   const queryClient = useQueryClient();
 
+  // Single query for expenses with a higher limit to get comprehensive data
   const { data: expensesData, isLoading: isLoadingExpenses } = useQuery({
     queryKey: ['expenses', filters],
-    queryFn: () => expenseService.getExpenses(filters),
+    queryFn: () => expenseService.getExpenses({ ...filters, limit: 100 }),
   });
 
-  const { data: totalExpenses, isLoading: isLoadingTotal } = useQuery({
-    queryKey: ['totalExpenses', filters],
-    queryFn: () => expenseService.getTotalExpenses(filters),
-  });
+  // Calculate total expenses from the main data
+  const totalExpenses = expensesData?.expenses.reduce((sum, expense) => sum + expense.amount, 0) ?? 0;
 
-  const { data: categoryData, isLoading: isLoadingCategories } = useQuery({
-    queryKey: ['expensesByCategory', filters],
-    queryFn: () => expenseService.getCategorySummary(filters),
-  });
+  // Calculate category summary from the main data
+  const categories = expensesData?.expenses.reduce((acc, expense) => {
+    const currentTotal = acc.get(expense.category) || 0;
+    acc.set(expense.category, currentTotal + expense.amount);
+    return acc;
+  }, new Map<string, number>()) ?? new Map<string, number>();
+
+  const categoryData = Array.from(categories.entries()).map(([category, total]) => ({
+    category,
+    total
+  }));
+
+  // Create pagination data
+  const pagination = {
+    total: expensesData?.pagination.total ?? 0,
+    page: filters?.page ?? 1,
+    limit: filters?.limit ?? 10,
+    pages: Math.ceil((expensesData?.pagination.total ?? 0) / (filters?.limit ?? 10))
+  };
 
   const createExpenseMutation = useMutation({
     mutationFn: (expense: CreateExpenseDTO) => expenseService.createExpense(expense),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
-      queryClient.invalidateQueries({ queryKey: ['totalExpenses'] });
-      queryClient.invalidateQueries({ queryKey: ['expensesByCategory'] });
     },
   });
 
@@ -34,8 +46,6 @@ export function useExpenses(filters?: ExpenseFilters) {
       expenseService.updateExpense(id, expense),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
-      queryClient.invalidateQueries({ queryKey: ['totalExpenses'] });
-      queryClient.invalidateQueries({ queryKey: ['expensesByCategory'] });
     },
   });
 
@@ -43,17 +53,15 @@ export function useExpenses(filters?: ExpenseFilters) {
     mutationFn: (id: string) => expenseService.deleteExpense(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
-      queryClient.invalidateQueries({ queryKey: ['totalExpenses'] });
-      queryClient.invalidateQueries({ queryKey: ['expensesByCategory'] });
     },
   });
 
   return {
     expenses: expensesData?.expenses ?? [],
-    pagination: expensesData?.pagination ?? { total: 0, page: 1, limit: 10, pages: 0 },
-    totalExpenses: totalExpenses ?? 0,
-    categories: categoryData ?? [],
-    isLoading: isLoadingExpenses || isLoadingTotal || isLoadingCategories,
+    pagination,
+    totalExpenses,
+    categories: categoryData,
+    isLoading: isLoadingExpenses,
     createExpense: createExpenseMutation.mutate,
     updateExpense: updateExpenseMutation.mutate,
     deleteExpense: deleteExpenseMutation.mutate,

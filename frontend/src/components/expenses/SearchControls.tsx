@@ -39,7 +39,19 @@ const SearchControls = memo(({ filters, onFilterChange }: SearchControlsProps) =
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    onFilterChange({ [name]: value, page: 1 });
+    // Ensure we have a valid date string in YYYY-MM-DD format
+    if (value) {
+      const date = new Date(value);
+      if (!isNaN(date.getTime())) {
+        const formattedDate = date.toISOString().split('T')[0];
+        onFilterChange({ [name]: formattedDate, page: 1 });
+      } else {
+        console.warn(`Invalid date value for ${name}:`, value);
+      }
+    } else {
+      // If the value is empty, clear the filter
+      onFilterChange({ [name]: '', page: 1 });
+    }
   };
 
   // Clean up timeout on unmount
@@ -74,7 +86,7 @@ const SearchControls = memo(({ filters, onFilterChange }: SearchControlsProps) =
         <select
           name="category"
           id="category"
-          value={filters.category}
+          value={filters.category || ''}
           onChange={handleCategoryChange}
           className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
@@ -94,7 +106,7 @@ const SearchControls = memo(({ filters, onFilterChange }: SearchControlsProps) =
           type="date"
           name="startDate"
           id="startDate"
-          value={filters.startDate}
+          value={filters.startDate || ''}
           onChange={handleDateChange}
           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
         />
@@ -107,7 +119,7 @@ const SearchControls = memo(({ filters, onFilterChange }: SearchControlsProps) =
           type="date"
           name="endDate"
           id="endDate"
-          value={filters.endDate}
+          value={filters.endDate || ''}
           onChange={handleDateChange}
           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
         />
