@@ -27,112 +27,99 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl flex flex-col items-center">
-        <h2 className="mb-2 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
-        </h2>
-        <p className="mb-6 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-            sign in to your account
-          </Link>
-        </p>
-        <form className="w-full space-y-5" onSubmit={handleSubmit(onSubmit)}>
-          {error && (
-            <div className="rounded-md bg-red-50 p-3">
-              <div className="text-sm text-red-700">{error}</div>
-            </div>
-          )}
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-lg">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-text">Create an account</h2>
+          <p className="mt-2 text-textSecondary">
+            Start managing your budget today
+          </p>
+        </div>
+
+        {error && (
+          <div className="mb-4 p-4 text-sm text-white bg-error rounded-lg">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label htmlFor="name" className="sr-only">
+            <label htmlFor="name" className="block text-sm font-medium text-text">
               Full name
             </label>
             <input
-              {...register('name', {
-                required: 'Name is required',
-                minLength: {
-                  value: 2,
-                  message: 'Name must be at least 2 characters',
-                },
-              })}
+              id="name"
               type="text"
-              className="block w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 shadow-sm transition"
-              placeholder="Full name"
-              autoComplete="name"
+              {...register('name', { required: 'Name is required' })}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+              <p className="mt-1 text-sm text-error">{errors.name.message}</p>
             )}
           </div>
+
           <div>
-            <label htmlFor="email" className="sr-only">
+            <label htmlFor="email" className="block text-sm font-medium text-text">
               Email address
             </label>
             <input
-              {...register('email', {
-                required: 'Email is required',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address',
-                },
-              })}
+              id="email"
               type="email"
-              className="block w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 shadow-sm transition"
-              placeholder="Email address"
-              autoComplete="email"
+              {...register('email', { required: 'Email is required' })}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-error">{errors.email.message}</p>
             )}
           </div>
+
           <div>
-            <label htmlFor="password" className="sr-only">
+            <label htmlFor="password" className="block text-sm font-medium text-text">
               Password
             </label>
             <input
-              {...register('password', {
-                required: 'Password is required',
-                minLength: {
-                  value: 6,
-                  message: 'Password must be at least 6 characters',
-                },
-              })}
+              id="password"
               type="password"
-              className="block w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 shadow-sm transition"
-              placeholder="Password"
-              autoComplete="new-password"
+              {...register('password', { required: 'Password is required' })}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
             />
             {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+              <p className="mt-1 text-sm text-error">{errors.password.message}</p>
             )}
           </div>
+
           <div>
-            <label htmlFor="confirmPassword" className="sr-only">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-text">
               Confirm password
             </label>
             <input
+              id="confirmPassword"
+              type="password"
               {...register('confirmPassword', {
                 required: 'Please confirm your password',
-                validate: value =>
-                  value === password || 'The passwords do not match',
+                validate: value => value === password || 'Passwords do not match'
               })}
-              type="password"
-              className="block w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-500 shadow-sm transition"
-              placeholder="Confirm password"
-              autoComplete="new-password"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
             />
             {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
+              <p className="mt-1 text-sm text-error">{errors.confirmPassword.message}</p>
             )}
           </div>
+
           <button
             type="submit"
-            className="w-full py-3 px-4 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow-md hover:from-indigo-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 transition"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             Create account
           </button>
         </form>
+
+        <p className="mt-6 text-center text-sm text-textSecondary">
+          Already have an account?{' '}
+          <Link to="/login" className="font-medium text-primary hover:text-primary/90">
+            Sign in here
+          </Link>
+        </p>
       </div>
     </div>
   );
