@@ -11,6 +11,7 @@
 - Layout component implemented to provide consistent structure across pages.
 - Login and Register pages updated with new design tokens and improved UX.
 - Dashboard page updated to use the new layout and design tokens.
+- **LandingPage redesigned with a modern, compelling hero, features, personal story, login link, and 'buy me a drink' placeholder.**
 - All changes are committed and pushed to remote.
 
 ## Next steps (when you return):
@@ -19,7 +20,6 @@
    - Add loading states and transitions
    - Improve mobile responsiveness
    - Add toast notifications for success/error feedback
-   - Update the LandingPage to match our new design
 2. Continue with the prioritized design improvement plan:
    - Dashboard Visuals
    - Expenses List
