@@ -31,3 +31,14 @@ go.work
 # OS specific files
 .DS_Store
 Thumbs.db
+
+# Go
+/backend/bin/
+/backend/vendor/
+/backend/.env
+
+# Node/React
+/frontend/node_modules/
+/frontend/.env
+/frontend/dist/
+/frontend/build/
