@@ -140,7 +140,13 @@ export function ExpenseCard({
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-indigo-600 truncate">{expense.description}</p>
           <p className="mt-1 text-sm text-gray-500">
-            {new Date(expense.date).toLocaleDateString()} • {expense.category}
+            {(() => {
+              const dateObj = new Date(expense.date);
+              const day = String(dateObj.getUTCDate()).padStart(2, '0');
+              const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+              const year = dateObj.getUTCFullYear();
+              return `${day}/${month}/${year}`;
+            })()} • {expense.category}
           </p>
         </div>
         <div className="flex items-center space-x-4">

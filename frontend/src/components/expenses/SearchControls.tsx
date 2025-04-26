@@ -39,17 +39,10 @@ const SearchControls = memo(({ filters, onFilterChange }: SearchControlsProps) =
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // Ensure we have a valid date string in YYYY-MM-DD format
+    // Use the value directly, it's already YYYY-MM-DD
     if (value) {
-      const date = new Date(value);
-      if (!isNaN(date.getTime())) {
-        const formattedDate = date.toISOString().split('T')[0];
-        onFilterChange({ [name]: formattedDate, page: 1 });
-      } else {
-        console.warn(`Invalid date value for ${name}:`, value);
-      }
+      onFilterChange({ [name]: value, page: 1 });
     } else {
-      // If the value is empty, clear the filter
       onFilterChange({ [name]: '', page: 1 });
     }
   };

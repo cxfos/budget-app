@@ -18,27 +18,11 @@ const convertFiltersToSnakeCase = (filters?: ExpenseFilters) => {
   
   // Format dates properly for the backend (YYYY-MM-DD)
   if (filters.startDate) {
-    // Make sure we're sending just the date part in the proper format
-    const startDate = new Date(filters.startDate);
-    if (!isNaN(startDate.getTime())) {
-      convertedFilters.start_date = startDate.toISOString().split('T')[0];
-      console.log('Formatted start date:', convertedFilters.start_date);
-    } else {
-      console.warn('Invalid start date:', filters.startDate);
-      convertedFilters.start_date = filters.startDate;
-    }
+    convertedFilters.start_date = filters.startDate; // Use as-is
   }
   
   if (filters.endDate) {
-    // Make sure we're sending just the date part in the proper format
-    const endDate = new Date(filters.endDate);
-    if (!isNaN(endDate.getTime())) {
-      convertedFilters.end_date = endDate.toISOString().split('T')[0];
-      console.log('Formatted end date:', convertedFilters.end_date);
-    } else {
-      console.warn('Invalid end date:', filters.endDate);
-      convertedFilters.end_date = filters.endDate;
-    }
+    convertedFilters.end_date = filters.endDate; // Use as-is
   }
   
   // Add other filters

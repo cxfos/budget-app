@@ -12,14 +12,14 @@ export function useExpenses(filters?: ExpenseFilters) {
   });
 
   // Calculate total expenses from the main data
-  const totalExpenses = expensesData?.expenses.reduce((sum, expense) => sum + expense.amount, 0) ?? 0;
+  const totalExpenses = (expensesData?.expenses ?? []).reduce((sum, expense) => sum + expense.amount, 0);
 
   // Calculate category summary from the main data
-  const categories = expensesData?.expenses.reduce((acc, expense) => {
+  const categories = (expensesData?.expenses ?? []).reduce((acc, expense) => {
     const currentTotal = acc.get(expense.category) || 0;
     acc.set(expense.category, currentTotal + expense.amount);
     return acc;
-  }, new Map<string, number>()) ?? new Map<string, number>();
+  }, new Map<string, number>());
 
   const categoryData = Array.from(categories.entries()).map(([category, total]) => ({
     category,
