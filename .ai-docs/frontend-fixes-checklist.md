@@ -12,12 +12,15 @@
   - Fixed the parameter names in the API calls, converting camelCase to snake_case for backend compatibility
   - Fixed date formatting to use ISO 8601 format with time component for backend compatibility
   - Ensured amount values are converted to numbers before sending to the backend
-- [ ] **Search functionality** - Implement working search for expenses
+- [x] **Search functionality** - Implement working search for expenses
   - Added search parameter support to the backend API
   - Improved component structure to prevent losing focus during search
   - Created separate components for search controls and results display
   - Used React.memo to prevent unnecessary re-renders
-- [ ] **Category filtering** - Enable category filtering for expenses
+- [x] **Category filtering** - Enable category filtering for expenses
+  - Implemented category filtering through dropdown selection
+  - Added proper filter propagation to the API
+  - Ensured categories are converted to the format expected by the backend
 - [ ] **Date range filtering** - Make date range filters functional
 
 ## Fix Process
@@ -32,14 +35,16 @@ For each issue, follow these steps exactly:
 6. **Next Item**: Move to the next item on the checklist
 
 ## Current Status
-- **Search functionality**: 
-  - ✅ Analysis completed
-  - ✅ Implementation completed
-  - ✅ Build completed
-  - ⏳ Waiting for manual testing confirmation
+- **Date range filtering**: 
+  - ⏳ Analysis pending
+  - ⏳ Implementation pending
+  - ⏳ Build pending
+  - ⏳ Manual testing pending
   - ⏳ Commit pending
 
 ## Completed Fixes
 - [x] **Client-side category aggregation** - Replaced the missing backend endpoint `/expenses/by-category` with a client-side implementation that aggregates expense data by category. This solution fetches all expenses and then calculates category totals locally. Committed in 9c10efc.
 - [x] **API URL configuration** - Updated Docker Compose environment variable to use the service name 'backend' instead of 'localhost' for the API URL. Committed in 9ebea62.
-- [x] **Expense creation and total display** - Fixed expense creation by properly formatting dates to ISO 8601 format and ensuring amounts are sent as numbers. This also fixed the total expenses display. Committed in 2bb5fbe. 
+- [x] **Expense creation and total display** - Fixed expense creation by properly formatting dates to ISO 8601 format and ensuring amounts are sent as numbers. This also fixed the total expenses display. Committed in 2bb5fbe.
+- [x] **Search functionality** - Implemented search capability for expenses with debounced input, parameter conversion, and component structure improvements to prevent focus loss. Committed in 1b7a7f5.
+- [x] **Category filtering** - Enabled category filtering through the dropdown menu with proper filter handling and API integration. Implemented alongside search functionality in the same commit. 
