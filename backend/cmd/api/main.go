@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"github.com/cxfos/budget-app/internal/handlers"
 	"github.com/cxfos/budget-app/internal/middleware"
@@ -19,9 +20,18 @@ func main() {
 		log.Println("No .env file found")
 	}
 
-	// Initialize database
-	if err := db.InitDB(); err != nil {
-		log.Fatal("Failed to connect to database:", err)
+	// Initialize database with retries
+	var dbErr error
+	for i := 0; i < 5; i++ {
+		dbErr = db.InitDB()
+		if dbErr == nil {
+			break
+		}
+		log.Printf("Failed to connect to database, retrying in 5 seconds... (attempt %d/5)", i+1)
+		time.Sleep(5 * time.Second)
+	}
+	if dbErr != nil {
+		log.Fatal("Failed to connect to database after 5 attempts:", dbErr)
 	}
 
 	// Create new Fiber app
@@ -31,7 +41,10 @@ func main() {
 
 	// Add middleware
 	app.Use(logger.New())
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+	}))
 
 	// Public routes
 	app.Get("/api/health", handlers.HealthCheck)
@@ -52,8 +65,9 @@ func main() {
 	// Start server
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "8080"
 	}
 
+	log.Printf("Server starting on port %s", port)
 	log.Fatal(app.Listen(":" + port))
 }

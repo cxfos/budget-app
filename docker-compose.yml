@@ -1,54 +1,38 @@
 version: '3.8'
 
 services:
-  app:
+  backend:
     build: ./backend
     ports:
-      - "3000:3000"
+      - "8080:8080"
     environment:
       - DB_HOST=db
-      - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=budget_app
-      - JWT_SECRET=your-secret-key-here
-      - JWT_EXPIRATION=24h
+      - DB_PORT=5432
     depends_on:
       - db
-    networks:
-      - budget-network
 
-  migrate:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.migrate
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
     environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=budget_app
+      - VITE_API_URL=http://localhost:8080/api
     depends_on:
-      - db
-    networks:
-      - budget-network
+      - backend
 
   db:
     image: postgres:15-alpine
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=budget_app
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - budget-network
 
 volumes:
   postgres_data:
-
-networks:
-  budget-network:
-    driver: bridge
