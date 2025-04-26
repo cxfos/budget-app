@@ -30,8 +30,21 @@ export const expenseService = {
     return data.total;
   },
 
-  async getExpensesByCategory(filters?: ExpenseFilters): Promise<{ category: string; total: number }[]> {
-    const { data } = await api.get('/expenses/by-category', { params: filters });
-    return data;
+  async getCategorySummary(filters?: ExpenseFilters): Promise<{ category: string; total: number }[]> {
+    const { data } = await api.get('/expenses', { params: { ...filters, limit: 100 } });
+    
+    const categoryMap = new Map<string, number>();
+    
+    data.expenses.forEach((expense: Expense) => {
+      const currentTotal = categoryMap.get(expense.category) || 0;
+      categoryMap.set(expense.category, currentTotal + expense.amount);
+    });
+    
+    const categoryData = Array.from(categoryMap.entries()).map(([category, total]) => ({
+      category,
+      total
+    }));
+    
+    return categoryData;
   }
 }; 

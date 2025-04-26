@@ -17,7 +17,7 @@ export function useExpenses(filters?: ExpenseFilters) {
 
   const { data: categoryData, isLoading: isLoadingCategories } = useQuery({
     queryKey: ['expensesByCategory', filters],
-    queryFn: () => expenseService.getExpensesByCategory(filters),
+    queryFn: () => expenseService.getCategorySummary(filters),
   });
 
   const createExpenseMutation = useMutation({
