@@ -4,11 +4,11 @@ This directory contains comprehensive documentation for the Budget App project, 
 
 ## 📁 Directory Structure
 
-### Design Documentation (`/design`)
-- `foundation.md` - Core design principles and visual identity
-- `instructions.md` - Detailed design implementation guidelines
-- `checklist.md` - Design tasks and requirements
-- `progress.md` - Current status of design implementation
+### Product Documentation (`/product`)
+- `project-phases.md` - Clear definition of project phases and priorities
+- `roadmap.md` - Long-term product development plan
+- `feature-expansion.md` - Planned feature additions
+- `launch-checklist.md` - Pre-launch and launch week tasks
 
 ### Development Documentation (`/development`)
 - `frontend-next-steps.md` - Planned frontend development tasks
@@ -17,10 +17,11 @@ This directory contains comprehensive documentation for the Budget App project, 
 - `auth-upgrade.md` - Authentication system upgrade strategy
 - `commit-guidelines.md` - Guidelines for writing commit messages
 
-### Product Documentation (`/product`)
-- `roadmap.md` - Long-term product development plan
-- `feature-expansion.md` - Planned feature additions
-- `launch-checklist.md` - Pre-launch and launch week tasks
+### Design Documentation (`/design`)
+- `foundation.md` - Core design principles and visual identity
+- `instructions.md` - Detailed design implementation guidelines
+- `checklist.md` - Design tasks and requirements
+- `progress.md` - Current status of design implementation
 
 ### Business Documentation (`/business`)
 - `monetization.md` - Revenue generation strategy
@@ -32,8 +33,15 @@ This directory contains comprehensive documentation for the Budget App project, 
 
 ## 🔍 Quick Reference
 
+### For Product Managers
+- Start with `/product/project-phases.md` for current phase and priorities
+- Review `/product/roadmap.md` for long-term planning
+- Check `/product/launch-checklist.md` for launch preparation
+- See `/product/feature-expansion.md` for upcoming features
+
 ### For Developers
-- Start with `/development/frontend-next-steps.md` and `/development/backend-next-steps.md`
+- Start with `/product/project-phases.md` to understand current priorities
+- Follow `/development/frontend-next-steps.md` and `/development/backend-next-steps.md`
 - Check `/development/frontend-fixes.md` for current issues
 - Review `/development/auth-upgrade.md` for authentication improvements
 - Follow `/development/commit-guidelines.md` for commit message standards
@@ -42,11 +50,6 @@ This directory contains comprehensive documentation for the Budget App project, 
 - Begin with `/design/foundation.md` for core principles
 - Follow `/design/instructions.md` for implementation guidelines
 - Track progress in `/design/progress.md`
-
-### For Product Managers
-- Review `/product/roadmap.md` for long-term planning
-- Check `/product/launch-checklist.md` for launch preparation
-- See `/product/feature-expansion.md` for upcoming features
 
 ### For Business Stakeholders
 - Review `/business/monetization.md` for revenue strategy
