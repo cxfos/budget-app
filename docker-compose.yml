@@ -1,16 +1,10 @@
-version: '3.8'
-
 services:
   backend:
     build: ./backend
     ports:
       - "8080:8080"
-    environment:
-      - DB_HOST=db
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=budget_app
-      - DB_PORT=5432
+    env_file:
+      - ./backend/.env
     depends_on:
       - db
 
@@ -18,17 +12,15 @@ services:
     build: ./frontend
     ports:
       - "80:80"
-    environment:
-      - VITE_API_URL=http://backend:8080/api
+    env_file:
+      - ./frontend/.env
     depends_on:
       - backend
 
   db:
     image: postgres:15-alpine
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=budget_app
+    env_file:
+      - ./config/.env
     ports:
       - "5432:5432"
     volumes:
